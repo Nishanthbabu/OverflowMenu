@@ -1,0 +1,40 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.skilledanswers_d1.overflowmenu.MainActivity">
+    <item
+        android:id="@+id/action_myaccount"
+        android:orderInCategory="100"
+        android:title="My Account"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_myorder"
+        android:orderInCategory="100"
+        android:title="My Orders"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_wishlist"
+        android:orderInCategory="100"
+        android:title="Wishlist"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_rate_the_app"
+        android:orderInCategory="100"
+        android:title="Rate the app"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_help_center"
+        android:orderInCategory="100"
+        android:title="Help Center"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_leagel"
+        android:orderInCategory="100"
+        android:title="Leagel"
+        app:showAsAction="never" />
+</menu>
