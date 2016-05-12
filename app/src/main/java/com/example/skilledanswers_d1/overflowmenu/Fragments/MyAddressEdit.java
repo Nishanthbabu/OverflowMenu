@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.BundleCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,10 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.skilledanswers_d1.overflowmenu.Adapters.MyAddressAdapter;
-import com.example.skilledanswers_d1.overflowmenu.MainActivity;
 import com.example.skilledanswers_d1.overflowmenu.R;
 
 /**
@@ -53,6 +48,7 @@ public class MyAddressEdit extends Fragment {
         View  view=inflater.inflate(R.layout.edit_address,container,false);
 
 
+
         nameLayout=(TextInputLayout)view.findViewById(R.id.myAddressNameLayout);
         pincodeLayout=(TextInputLayout)view.findViewById(R.id.myAddresspinLayout);
         addressLayout=(TextInputLayout)view.findViewById(R.id.myAddressAddressLayout);
@@ -84,7 +80,15 @@ public class MyAddressEdit extends Fragment {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitForm();
+                Bundle bundle=getArguments();
+                if(bundle!=null) {
+                    if(bundle.getString("ADDRESS_ACTION").equals("add_address"))
+                    {
+                        submitForm();
+                    }
+                }else {
+                    submitEditedForm();
+                }
 
             }
         });
@@ -208,8 +212,8 @@ public class MyAddressEdit extends Fragment {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION);
         }
     }
-    ///////// validating the form....
-    private void submitForm()
+    ///////// validating the edited form....
+    private void submitEditedForm()
     {
         if(!validateName())
         {
@@ -243,6 +247,52 @@ public class MyAddressEdit extends Fragment {
         getActivity().getSupportFragmentManager().popBackStackImmediate();
 
 
+
+    }
+
+    ///////// validating the form....
+    private void submitForm()
+    {
+        if(!validateName())
+        {
+            return;
+        }
+        if(!validatePinCode())
+        {
+            return;
+        }
+        if(!validateAddress())
+        {
+            return;
+        }
+        if(!validateCity())
+        {
+            return;
+        }
+        if(!validateState())
+        {
+            return;
+        }
+        if(!validatePhno(phNoEdit.getText().toString().trim()))
+        {
+            return;
+        }
+//        public static String addName=null;
+//        public static String  addPincode=null;
+//        public static String addAddress=null;
+//        public static String addLandmark=null;
+//        public static String addCity=null;
+//        public static String addState=null;
+//        public static String addPhno=null;
+        MyAddressesFrag.addName=nameEdit.getText().toString();
+        MyAddressesFrag.addPincode=pinEdit.getText().toString();
+        MyAddressesFrag.addAddress=addressEdit.getText().toString();
+        MyAddressesFrag.addLandmark=landMarkEdit.getText().toString();
+        MyAddressesFrag.addCity=cityEdit.getText().toString();
+        MyAddressesFrag.addState=stateEdit.getText().toString();
+        MyAddressesFrag.addPhno=phNoEdit.getText().toString();
+        MyAddressesFrag.addAditionalAddress=true;
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
 
     }
     ///////

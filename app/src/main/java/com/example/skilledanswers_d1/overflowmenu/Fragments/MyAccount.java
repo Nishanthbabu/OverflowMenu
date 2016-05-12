@@ -1,10 +1,13 @@
 package com.example.skilledanswers_d1.overflowmenu.Fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,8 @@ public class MyAccount extends Fragment {
     private ImageView settingPen=null;
     Toolbar toolbar=null;
     private Fragment fragment=null;
+    /////////
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,16 +50,7 @@ public class MyAccount extends Fragment {
         View view=inflater.inflate(R.layout.fragment_my_account, container, false);
         ///// toolbar stuff
          toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
-//        toolbar.setNavigationIcon(R.drawable.back_navigation);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FragmentManager fm = getActivity()
-//                        .getSupportFragmentManager();
-//                fm.pop();
-//
-//            }
-//        });
+
         profilePic=(ImageView)view.findViewById(R.id.fragmentMyAccount_profilePicID);
         profileName=(TextView)view.findViewById(R.id.fragmentMyAccount_profileNameID);
         phNo=(TextView)view.findViewById(R.id.fragmentMyAccount_phnoID);
@@ -92,16 +88,29 @@ public class MyAccount extends Fragment {
                 transaction.commit();
             }
         });
+        myReviewsViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment=new MyReviewsPager();
+                FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content_main,fragment,"MYREVIEWFRAG");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
-
+        settingPen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment=new PersonalDetailsEdit();
+                FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content_main,fragment,"PERSONALDETAILEDIT");
+                transaction.addToBackStack(fragment.getTag());
+                transaction.commit();
+            }
+        });
 
         return view ;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-
-    }
 }

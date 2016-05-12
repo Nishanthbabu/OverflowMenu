@@ -73,7 +73,12 @@ public class MyAddressAdapter extends RecyclerView.Adapter<MyAddressAdapter.Hold
                         }
                         else if(id==R.id.removeAddressID)
                         {
-                            System.out.println("oooooooooooodown");
+                            myAddressModels.remove(position);
+                            notifyDataSetChanged();
+                           Fragment someFragment = ((MainActivity)context).getSupportFragmentManager().findFragmentByTag("MYADDRESSFRAG");
+                            View  view=someFragment.getView();
+                            TextView t = (TextView) view.findViewById(R.id.fragment_address_savedAddressTextviewID);
+                            t.setText(myAddressModels.size()+" Saved Addresses");
                         }
                         return true;
                     }

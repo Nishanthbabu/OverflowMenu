@@ -3,6 +3,7 @@ package com.example.skilledanswers_d1.overflowmenu.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,6 +28,15 @@ public class MyAddressesFrag extends Fragment {
     public static String editPhno=null;     ////// static data to get the  data
     public static String editAddress=null;
     public static int editablePosition=0;
+    /////////////////
+    public static boolean addAditionalAddress=false;
+    public static String addName=null;
+    public static String  addPincode=null;
+    public static String addAddress=null;
+    public static String addLandmark=null;
+    public static String addCity=null;
+    public static String addState=null;
+    public static String addPhno=null;
     ///////////////////
     private RecyclerView recyclerView=null;
     private TextView addaddressTextview=null;
@@ -70,9 +80,9 @@ public class MyAddressesFrag extends Fragment {
         addaddressTextview=(TextView)view.findViewById(R.id.fragment_addAddressTextviewID);
         noOfAddressTextview=(TextView)view.findViewById(R.id.fragment_address_savedAddressTextviewID);
         layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-        myAddressModels.clear();
-        setdata();
-        noOfAddressTextview.setText(myAddressModels.size()+" Saved Addresses");
+//        myAddressModels.clear();
+//        setdata();
+
         MyAddressAdapter adapter=new MyAddressAdapter(myAddressModels,getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -81,7 +91,14 @@ public class MyAddressesFrag extends Fragment {
         addaddressTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle  bundle=new Bundle();
+                MyAddressEdit myAddressEdit=new MyAddressEdit();
+                bundle.putString("ADDRESS_ACTION","add_address");
+                FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+                myAddressEdit.setArguments(bundle);
+                transaction.addToBackStack(null);
+                transaction.replace(R.id.content_main,myAddressEdit);
+                transaction.commit();
             }
         });
         return view;
@@ -100,7 +117,31 @@ public class MyAddressesFrag extends Fragment {
             MyAddressAdapter adapter=new MyAddressAdapter(myAddressModels,getActivity());
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+            noOfAddressTextview.setText(myAddressModels.size()+" Saved Addresses");
             updateAddress=false;
+
+        }else if(addAditionalAddress)
+        {
+            Toast.makeText(getActivity(),"Address Added",Toast.LENGTH_LONG).show();
+            MyAddressModel model=new MyAddressModel();
+//            public static String addName=null;
+//            public static String  addPincode=null;
+//            public static String addAddress=null;
+//            public static String addLandmark=null;
+//            public static String addCity=null;
+//            public static String addState=null;
+//            public static String addPhno=null;
+            model.set_name(addName);
+            model.set_phno(addPhno);
+            model.set_address(addAddress);
+            myAddressModels.add(model);
+            layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
+            MyAddressAdapter adapter=new MyAddressAdapter(myAddressModels,getActivity());
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            noOfAddressTextview.setText(myAddressModels.size()+" Saved Addresses");
+            updateAddress=false;
+
 
         }
     }
