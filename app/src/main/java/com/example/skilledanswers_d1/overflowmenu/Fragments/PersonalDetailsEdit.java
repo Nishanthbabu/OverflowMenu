@@ -148,7 +148,7 @@ public class PersonalDetailsEdit extends Fragment {
 
                 camaraImage = (Bitmap) data.getExtras().get("data");
                 imageadded = camaraImage != null;
-                profilePICImageview.setImageBitmap(galaryImage);
+                profilePICImageview.setImageBitmap(camaraImage);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 camaraImage.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
